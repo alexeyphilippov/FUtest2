@@ -17,7 +17,7 @@ public final class FileUtils {
         }
         File file = new File(path);
         if (!file.isFile()) {
-            throw new FileNotFoundException("This might be a directory");
+            throw new IllegalArgumentException("This might be a directory");
         }
         if (file.exists()) {
             file.delete();
@@ -29,19 +29,18 @@ public final class FileUtils {
     public static void writeAll(String path, List<String> lines) throws IOException {
         if (Objects.isNull(path)) {
             throw new IllegalArgumentException("Path should not be null");
-        } else if (lines == null) {
+        }
+        if (Objects.isNull(lines)) {
             throw new IllegalArgumentException("List should not be null");
         }
         File file = new File(path);
         if (!file.isFile()) {
-            throw new FileNotFoundException("This might be a directory");
+            throw new IllegalArgumentException("This might be a directory");
         } else {
             try (FileWriter fileWriter = new FileWriter(path)) {
                 for (String line : lines) {
                     fileWriter.write(line + System.lineSeparator());
                 }
-            } catch (IOException e) {
-                throw new IOException("Error while writing to file",e);
             }
         }
     }
@@ -55,17 +54,15 @@ public final class FileUtils {
             throw new FileNotFoundException("File does not exist");
         }
         else if (!file.isFile()) {
-            throw new FileNotFoundException("This might be a directory");
+            throw new IllegalArgumentException("This might be a directory");
         }
         List<String> lines = new ArrayList<>();
-        try (FileReader fileReader = new FileReader(path)) {
-            BufferedReader br = new BufferedReader(fileReader);
+        try (FileReader fileReader = new FileReader(path);
+                    BufferedReader br = new BufferedReader(fileReader)) {
             String s;
             while ((s = br.readLine()) != null) {
                 lines.add(s);
             }
-        } catch (IOException e) {
-            throw new IOException("Error while reading from file" ,e);
         }
         return lines;
     }

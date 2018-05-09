@@ -25,7 +25,7 @@ public class DeleteTest {
         thrown.expectMessage("path string shouldn't be null");
         FileUtils.delete(null);
     }
-    @Test(expected = FileNotFoundException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testWrongDest() throws FileNotFoundException {
         thrown.expectMessage(String.format("path string is wrong","file already exists"));
         FileUtils.delete("src/test/resources/d");

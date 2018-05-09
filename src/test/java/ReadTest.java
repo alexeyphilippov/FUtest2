@@ -30,7 +30,7 @@ public class ReadTest {
 
     @Test
     public void directoryPathTest() throws IOException {
-        thrown.expect(FileNotFoundException.class);
+        thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("This might be a directory");
         futest.me.FileUtils.readAll("src/test/resources/directory");
     }

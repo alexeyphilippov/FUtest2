@@ -26,14 +26,14 @@ public class WriteTest {
 
     @Test
     public void wrongPathTest() throws IOException {
-        thrown.expect(FileNotFoundException.class);
+        thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage(String.format("This might be a directory", "src/test/resources/y"));
         FileUtils.writeAll("src/test/resources/y", emptyArrayList);
     }
 
     @Test
     public void directoryPathTest() throws IOException {
-        thrown.expect(FileNotFoundException.class);
+        thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage(String.format("This might be a directory", "src/test/resources/directory"));
         FileUtils.writeAll("src/test/resources/directory",emptyArrayList);
     }
@@ -41,7 +41,7 @@ public class WriteTest {
 
     @Test
     public void nullListTest() throws IOException {
-        thrown.expect(NullPointerException.class);
+        thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("List should not be null");
         FileUtils.writeAll("src/test/resources/lines", null);
     }
